@@ -62,7 +62,6 @@ high_bloodpressure_diabetes = len(stats[(stats.BloodPressure>70) & (stats.Outcom
 """
 DATA VISUALIZATION
 """
-#col = list(stats.columns[0:8])
 plt.rcParams['axes.grid'] = True
 plt.rcParams.update({'font.size': 12})
 sns.set(style="darkgrid")
@@ -111,7 +110,7 @@ plt.savefig("histograms.png", dpi=300, bbox_inches="tight");
 plt.show()
 
 # Boxplots 
-plt.figure(4)
+plt.figure()
 fig4, ax4 = plt.subplots(nrows=2, ncols=4, figsize=(12,10))
 ax4 = fig4.add_subplot()
 plt.tight_layout()
@@ -126,7 +125,7 @@ plt.savefig("boxplots.png", dpi=300, bbox_inches="tight");
 plt.show(fig4)
 
 # Violinplots
-plt.figure(5)
+plt.figure()
 fig5, ax5 = plt.subplots(nrows=2, ncols=4, figsize=(12,10))
 ax5 = fig5.add_subplot()
 plt.tight_layout()
@@ -142,7 +141,7 @@ plt.show(fig5)
 
 # STUDYING GLUCOSE
 # Histogram
-plt.figure(7)
+plt.figure()
 list1 = list()
 mylabels=list()
 for outcome in stats.Outcome.cat.categories:
