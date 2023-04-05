@@ -166,8 +166,7 @@ COMPARING PARAMETERS we see linear relationships between:
 - BMI and Skin Thickness
 - Glucose and Insulin
 
-STUDYING THE RELATIONSHIP BETWEEN DIABETES AND EACH PARAMETER, 
-we can conclude that diabetes is mainly related with:
+STUDYING THE RELATIONSHIP BETWEEN DIABETES AND EACH PARAMETER, we can conclude that diabetes is mainly related with:
 - High glucose levels
 """
 
