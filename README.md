@@ -1,4 +1,4 @@
-# python-data-science
+# python-data-diabetes
 
 This was a project done to consolidate knowledge in python after having concluded the Udemy online course "Python A-Z™: Python For Data Science With Real Exercises!".
 
