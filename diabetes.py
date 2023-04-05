@@ -96,8 +96,8 @@ stats.Outcome = stats.Outcome.astype('category')
 
 # Histograms
 plt.figure()
-fig2, axes2 = plt.subplots(nrows=4, ncols=2, figsize=(20,10))
-axes2 = fig2.add_subplot()
+fig3, axes3 = plt.subplots(nrows=4, ncols=2, figsize=(20,10))
+axes3 = fig3.add_subplot()
 plt.tight_layout()
 for i in range(len(col)-1):
     for outcome in stats.Outcome.cat.categories:
@@ -105,7 +105,7 @@ for i in range(len(col)-1):
         sns.distplot(stats[stats.Outcome == outcome][col[i]])
 plt.subplot(2,4,4).legend(['No diabetes', 'Diabetes'], loc='upper right')
 plt.suptitle("Data analysis per parameter and diagnosis - histograms", y=1, fontsize=18)
-fig2.tight_layout(pad=1.2)
+fig3.tight_layout(pad=1.2)
 plt.savefig("histograms.png", dpi=300, bbox_inches="tight");
 plt.show()
 
@@ -142,15 +142,15 @@ plt.show(fig5)
 # STUDYING GLUCOSE
 # Histogram
 plt.figure()
-list1 = list()
+list = list()
 mylabels=list()
 for outcome in stats.Outcome.cat.categories:
-    list1.append(stats[stats.Outcome == outcome].Glucose)
+    list.append(stats[stats.Outcome == outcome].Glucose)
     mylabels.append(outcome)
 
 mylabels[0] = 'No diabetes'
 mylabels[1] = 'Diabetes'
-h = plt.hist(list1, bins=30, stacked=True, label = mylabels)
+h = plt.hist(list, bins=30, stacked=True, label = mylabels)
 plt.legend(loc="upper left")
 plt.title('Blood glucose levels per diagnosis')
 plt.savefig("glucose_distribution.png", dpi=300, bbox_inches="tight");  
