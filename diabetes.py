@@ -19,7 +19,7 @@ stats = pd.read_csv('diabetes.csv')
 DATA EXPLORATION
 """
 
-stats.head(6)
+stats.head()
 
 # Data statistics
 stats.describe()
@@ -31,32 +31,35 @@ has_diabetes_perc = (len(stats[stats.Outcome == 1])/stats_len)*100 #~34.9%
 
 # DATA VALIDATION
 # remove last column (diabetes classification as 0 or 1) - Stats without outcome
-stats_no_outcome = stats[stats.columns[0:7]]
+stats_no_outcome = stats[stats.columns[0:8]]
 
 # Count valid values (non-zero) for each parameter (column)
 # (for these variables, having values = 0 does not make sense)
 valid_values_perc = ((stats_no_outcome.astype(bool).sum(axis=0))/stats_len) * 100
 
-# Count invalid values (zero) for each parameter (column)
+# Count invalid values (=0) for each parameter (column)
 invalid_values_perc = (((stats_no_outcome==0).sum(axis=0))/stats_len)*100
 
-# For all of them, DiabetesPedigree and age were registered
-# For some of them, blood pressure, skin thickness and BMI were not registered 
+"""
+For all of them Diabetes Pedigree Function and Age were registered
+For almost all of them, Glucose was registered
+For some, Blood Pressure, Skin Thickness, Insuline and BMI were not registered 
+"""
 
-# GLUCOSE
-# People with normal glucose levels - between 72 to 99 (when fasting)
+# STUDYING GLUCOSE
+# Percentage of people with normal glucose levels - between 72 to 99 (when fasting)
 normal_glucose = (len(stats[(stats.Glucose>72) & (stats.Glucose<99)])/stats_len)*100
 
 # Percentage of people with high glucose that have diabetes 
 high_glucose_diabetes = len(stats[(stats.Glucose>99) & (stats.Outcome==1)])/len(stats[stats.Glucose>99])*100 
 #44% of people with high blood glucose levels have diabetes
 
-# BLOOD PRESSURE
+# STUDYING BLOOD PRESSURE
 # Invalid blood pressure
-invalid_blood_pressure_perc = (len(stats[stats.BloodPressure == 0])/stats_len)*100
+invalid_blood_pressure = (len(stats[stats.BloodPressure == 0])/stats_len)*100
 
 # Percentage of people with high blood pressure that have diabetes 
-high_bloodpressure_diabetes = len(stats[(stats.BloodPressure>70) & (stats.Outcome==1)])/len(stats[stats.BloodPressure>70])*100 
+high_blood_pressure_diabetes = len(stats[(stats.BloodPressure>70) & (stats.Outcome==1)])/len(stats[stats.BloodPressure>70])*100 
 #40% of people with high blood pressure levels have diabetes
 
 """
@@ -96,8 +99,8 @@ stats.Outcome = stats.Outcome.astype('category')
 
 # Histograms
 plt.figure()
-fig3, axes3 = plt.subplots(nrows=4, ncols=2, figsize=(20,10))
-axes3 = fig3.add_subplot()
+fig4, axes4 = plt.subplots(nrows=4, ncols=2, figsize=(20,10))
+axes4 = fig4.add_subplot()
 plt.tight_layout()
 for i in range(len(col)-1):
     for outcome in stats.Outcome.cat.categories:
@@ -105,14 +108,14 @@ for i in range(len(col)-1):
         sns.distplot(stats[stats.Outcome == outcome][col[i]])
 plt.subplot(2,4,4).legend(['No diabetes', 'Diabetes'], loc='upper right')
 plt.suptitle("Data analysis per parameter and diagnosis - histograms", y=1, fontsize=18)
-fig3.tight_layout(pad=1.2)
+fig4.tight_layout(pad=1.2)
 plt.savefig("histograms.png", dpi=300, bbox_inches="tight");
 plt.show()
 
 # Boxplots 
 plt.figure()
-fig4, ax4 = plt.subplots(nrows=2, ncols=4, figsize=(12,10))
-ax4 = fig4.add_subplot()
+fig5, ax5 = plt.subplots(nrows=2, ncols=4, figsize=(12,10))
+ax5 = fig5.add_subplot()
 plt.tight_layout()
 for i in range(len(col)-1):
     plt.subplot(2,4,i+1)
@@ -120,14 +123,14 @@ for i in range(len(col)-1):
     plt.xticks([0, 1], ['No diabetes', 'Diabetes'])
     plt.xlabel('Diagnosis')    
 plt.suptitle("Data analysis per parameter and diagnosis - boxplots", y=1, fontsize=18)
-fig4.tight_layout(pad=1.2)
+fig5.tight_layout(pad=1.2)
 plt.savefig("boxplots.png", dpi=300, bbox_inches="tight");
-plt.show(fig4)
+plt.show()
 
 # Violinplots
 plt.figure()
-fig5, ax5 = plt.subplots(nrows=2, ncols=4, figsize=(12,10))
-ax5 = fig5.add_subplot()
+fig6, ax6 = plt.subplots(nrows=2, ncols=4, figsize=(12,10))
+ax6 = fig5.add_subplot()
 plt.tight_layout()
 for i in range(len(col)-1):
     plt.subplot(2,4,i+1)
@@ -135,28 +138,26 @@ for i in range(len(col)-1):
     plt.xticks([0, 1], ['No diabetes', 'Diabetes'])
     plt.xlabel('Diagnosis') 
 plt.suptitle("Data analysis per parameter and diagnosis - violinplots", y=1, fontsize=18)
-fig5.tight_layout(pad=1.2)
+fig6.tight_layout(pad=1.2)
 plt.savefig("violinplots.png", dpi=300, bbox_inches="tight");      
-plt.show(fig5)
+plt.show()
 
 # STUDYING GLUCOSE
 # Histogram
-plt.figure()
-list = list()
-mylabels=list()
+glucose_list = []
+mylabels=[]
 for outcome in stats.Outcome.cat.categories:
-    list.append(stats[stats.Outcome == outcome].Glucose)
+    glucose_list.append(stats[stats.Outcome == outcome].Glucose)
     mylabels.append(outcome)
 
 mylabels[0] = 'No diabetes'
 mylabels[1] = 'Diabetes'
-h = plt.hist(list, bins=30, stacked=True, label = mylabels)
+glucose_h = plt.hist(glucose_list, bins=30, stacked=True, label = mylabels)
 plt.legend(loc="upper left")
 plt.title('Blood glucose levels per diagnosis')
 plt.savefig("glucose_distribution.png", dpi=300, bbox_inches="tight");  
-plt.show(h)
+plt.show()
 # most people has glucose~100
-
 
 """
 CONCLUSIONS
